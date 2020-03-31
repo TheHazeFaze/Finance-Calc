@@ -1,26 +1,41 @@
-let money = +prompt("Ваш бюджет на месяц");
-let time = prompt("Введите дату в формате YYYY-MM-DD");
+let money, time;
+
+function start (){
+    money = +prompt("Ваш бюджет на месяц?");
+    time = prompt("Введите дату в формате YYYY-MM-DD");
+
+    while(isNaN(money) || money == '' || money == null){
+        money = +prompt("Ваш бюджет на месяц??!");
+    }
+}
+start();
 
 let appData = {
     budget: money,
     timeData: time,
     expenses: {},
     optionalExpenses: {},
-    iconme: []
+    iconme: [],
+    savings: true
 };
 
+function choseExpenses() {
+    for (i = 0; i < 2; i++) {
+        let a = prompt("Введите обязательную статью расходов в этом месяце", '');
+        let b = prompt("Во сколько это обойдется?", '');
+        
+        if(typeof(a) === 'string' && typeof(a) !== null && a.length < 50 && typeof(b) !== null && a !== '' && b !== ''){
+            console.log("Good!");
+            appData.expenses[a] = b;
+        }else {
+            console.log('Something goes wrong');
+            i--;
+        }
+}
+}
 
-for (i = 0; i < 2; i++) {
-    let a = prompt("Введите обязательную статью расходов в этом месяце", '');
-    let b = prompt("Во сколько это обойдется?", '');
-    
-    if(typeof(a) === 'string' && typeof(a) !== null && a.length < 50 && typeof(b) !== null && a !== '' && b !== ''){
-        console.log("Good!");
-        appData.expenses[a] = b;
-    }else {
-        console.log('Something goes wrong')
-        i--;
-    }
+choseExpenses();
+
 
 
 
@@ -53,7 +68,7 @@ do{
 } while (i < 2);*/
 
 
-appData.moneyPerDay = appData.budget / 30;
+appData.moneyPerDay = (appData.budget / 30).toFixed();
 alert(`Ваш дневной бюджет составляет: ${appData.moneyPerDay}`);
 
 if (appData.moneyPerDay <= 100) {
@@ -65,3 +80,18 @@ if (appData.moneyPerDay <= 100) {
 } else {
     console.log('Произошла ошибка');
 }
+
+function checkSavings(){
+    if (appData.savings == true){
+        let save = +prompt("Какова сумма Ваших накоплений? (Введите 0 если их нет)", '');
+                if (save !== 0 && save !== null && save !== '') {  
+                    persent = +prompt("под какой процент Ваш депозит", '');    
+                    appData.monthIncome = save/100/12*persent;
+                    alert("Доход в месяц с Вашего дипозита: " + appData.monthIncome);
+                } 
+                else {
+                    console.log("накоплений нет, либо поле пустое");
+                }
+    }
+}
+checkSavings();SD
